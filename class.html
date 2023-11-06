@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Bingo!</title>
+  </head>
+  <body>
+     <div id="container"></div>
+    <div id="input"></div>
+  </body>
+  <script>
+    var data = {}
+    var classid;
+
+    function load(){
+      let req = new XMLHttpRequest();
+
+      req.onreadystatechange = () => {
+        if (req.readyState == XMLHttpRequest.DONE) {
+          console.log(req.responseText);
+        }
+      };
+      
+      req.open("GET", "https://api.jsonbin.io/v3/b/654953a90574da7622c2f304/?meta=false", true);
+      req.setRequestHeader("X-Master-Key", "$2b$10$i3qJgSD.qkNJRnyjAWq0ZePymTTWgzaBSJzm2nEJn4KpSb6S3/T7K");
+      req.send();
+    }
+    
+    window.onload = function(){
+      classid = window.location.href.split("?")[1];
+      var ini = setInterval(load, 1000)
+    }
+
+    function ondata(q){
+      data = JSON.parse(q);
+      if(!localStorage.cls.split(",").includes(classid)){
+        alert("No tens accés a aquesta classe")
+      }
+      else{
+        var arr = data[classid].arr;
+        for(el in arr){
+          console.log(arr[el])
+        }
+      }
+    }
+  </script>
+</html>
